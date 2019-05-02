@@ -1,3 +1,51 @@
-<p>
-  organizations-form works!
-</p>
+<div nz-row>
+  <div *ngIf="!editMode" nz-col nzSpan="16" nzOffset="4">
+    <h1>Adding a New Organization</h1>
+    <nz-divider nzText="Add" nzOrientation="right"></nz-divider>
+  </div>
+
+  <div *ngIf="editMode" nz-col nzSpan="14" nzOffset="4">
+    <h1>Editing {{ organization.name }}</h1>
+    <nz-divider nzText="Edit" nzOrientation="right"></nz-divider>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="20" nzOffset="2">
+    <form nz-form [formGroup]="organizationForm" (ngSubmit)="onSubmit()">
+    
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="organizationName">Organization Name</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <input nz-input name="orgName" id="organizationName" placeholder="Name" type="text" formControlName="orgName">
+          <nz-form-explain *ngIf="!organizationForm.get('orgName').valid && organizationForm.get('orgName').touched">
+            This field is required!
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="organizationDesc">Organization Description</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <textarea nz-input formControlName="orgDesc" placeholder="Summary Describing the Organization" type="text"
+            id="desc" rows="5">
+                  </textarea>
+          <nz-form-explain *ngIf="!organizationForm.get('orgDesc').valid && organizationForm.get('orgDesc').touched">
+            This field is required!
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <nz-button-group>
+            <button nz-button nzType="primary" class="btn btn-success" [disabled]="!organizationForm.valid" type="submit"><i
+                nz-icon nzType="save"></i>Save</button>
+            <button nz-button nzType="default" class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
+            <button nz-button nzType="danger" class="btn btn-danger" type="button" (click)="onCancel()">Cancel</button>
+          </nz-button-group>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
