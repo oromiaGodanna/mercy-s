@@ -27,6 +27,10 @@ export class OrganizationsService {
   getOrganization(id: number){
     return this.orgnizations.find(organization => organization.id == id);
   }
+  
+  getOrganizationByIndex(index: number) {
+    return this.orgnizations[index];
+  }
 
   addOrganization(newOrganization: Organization){
     this.orgnizations.push(newOrganization);

@@ -1,3 +1,44 @@
-<p>
-  organizations-list works!
-</p>
+<div nz-row>
+  <div nz-col nzSpan="20" nzOffset="2">
+    <br>
+    <h1>Organizations</h1>
+    <button nz-button nzSize="large" nzType="primary" (click)="onAddOrganization()" type="submit">
+      <i nz-icon [type]="'plus'"></i>Add New Organization</button>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="16" nzOffset="4">
+    <nz-divider nzText="List" nzOrientation="right"></nz-divider>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="16" nzOffset="4">
+    <nz-table #basicTable [nzData]="organizations">
+      <thead>
+        <tr>
+          <th>Organization Name</th>
+          <th>Organizatio Description </th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let organization of organizations;let i=index">
+          <td>{{organization.name}}</td>
+          <td>{{organization.description}}</td>
+          <td>
+            <a><i style="font-size: 20px; color: #08c;" nz-icon nzType="eye" nzTheme="outline" nz-tooltip
+                nzTitle="View {{organization.name}} Details" (click)="onView(i)"></i></a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a><i style="font-size: 20px; color: #08c;" nz-icon nzType="edit" nz-tooltip
+                nzTitle="Edit {{organization.name}}" (click)="onEdit(i)"></i></a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a><i style="font-size: 20px; color: red;" nz-icon nzType="delete" nzTheme="outline" nz-tooltip
+                nzTitle="Delete {{organization.name}}" (click)="onDelete(i)"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
