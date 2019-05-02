@@ -1,3 +1,29 @@
-<p>
-  organizations-detail works!
-</p>
+
+<div nz-row>
+  <div nz-col nzSpan="16" nzOffset="4">
+    <nz-divider nzText="details" nzOrientation="right"></nz-divider>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="16" nzOffset="4">
+      <p style="font-size:30px; color:rgba(0, 0, 0, 0.85); margin-bottom:16px; font-weight: 500;">
+        {{organization.name}}
+      </p>
+      <nz-card nzType="inner" nzTitle="Description">
+        <p>{{organization.description}} </p>
+      </nz-card>
+     
+      <nz-card nzType="inner" style="margin-top:16px;" nzTitle="Departments">
+        <h3><a (click)="onViewDepartments()" nz-tooltip nzTitle="View Departments under {{organization.name}}">
+          View Department List</a></h3>
+      </nz-card>
+      <br><br>
+      <nz-button-group>
+        <button nz-button nzSize="large" nzType="default" type="button" class="btn btn-primary" (click)="onEdit()">
+          <i nz-icon nzType="edit" nzTheme="outline"></i>Edit</button>
+        <button nz-button nzSize="large" nzType="danger" type="button" class="btn btn-danger"(click)="onDelete()">
+         <i nz-icon nzType="delete" nzTheme="outline"></i>Delete</button>
+      </nz-button-group>
+  </div>
+</div>
