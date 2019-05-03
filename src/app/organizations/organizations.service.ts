@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Organization } from './organizations.model';
 import { Subject } from 'rxjs';
+import { DepartmentsService } from '../departments/departments.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class OrganizationsService {
     new Organization("Organization5", "Organization 5", 5),
   ];
 
-  constructor() { }
+  constructor(private departmentService: DepartmentsService) { }
 
 
   getOrganizations(){
@@ -46,6 +47,7 @@ export class OrganizationsService {
   deleteOrganization(id: number){
     var index = this.orgnizations.indexOf(this.getOrganization(id));
     this.orgnizations.splice(index, 1);
+    this.departmentService.deleteAllOrganizationDepartments(id);
     this.organizationListChanged.next(this.orgnizations.slice());
   }
 }

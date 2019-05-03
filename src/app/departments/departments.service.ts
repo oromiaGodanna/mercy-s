@@ -58,13 +58,20 @@ export class DepartmentsService {
     this.departmentListChanged.next(this.departments.slice());
   }
 
+  deleteAllOrganizationDepartments(org_id: number){
+    var root = this.departments.find(dept => dept.organization_id == org_id && dept.parent_id == null);
+    console.log(root);
+    if(root){
+      this.deleteDepartment(root.id);
+    }
+  }
+
   private deleteChildrens(dept_id: number){
     var childrens: number[] = [];
     this.departments.forEach(dept => {
       if(dept.parent_id != null){
         if (dept.parent_id == dept_id) {
           childrens.push(dept.id);
-          //this.deleteChildrens(dept.id);
         }
       } 
       });
