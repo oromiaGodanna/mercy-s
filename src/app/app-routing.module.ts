@@ -15,8 +15,8 @@ const appRoutes: Routes = [
     { path: "org-form", component: OrganizationsFormComponent },
     { path: "org-form/:id", component: OrganizationsFormComponent},
     { path: "org-details/:id", component: OrganizationsDetailComponent}, 
-    { path: "all-departments", component: AllDepartmentsComponent},
-    { path: "departments", component: DepartmentsComponent},
+    { path: "departments", component: AllDepartmentsComponent},
+    { path: "departments/:org_id", component: DepartmentsComponent},
     { path: "dept-form", component: DepartmentsFormComponent},
     { path: "dept-form/:id", component: DepartmentsFormComponent},
     { path: "dept-details/:id", component: DepartmentsDetailComponent}

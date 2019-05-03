@@ -52,8 +52,9 @@ export class OrganizationsDetailComponent implements OnInit {
     });
 
   }
-
+ 
   onViewDepartments() {
+    this.router.navigate(['departments', this.organization.id])
   }
 
 }
