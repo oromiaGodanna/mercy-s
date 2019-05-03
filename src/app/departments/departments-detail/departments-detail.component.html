@@ -1,3 +1,33 @@
-<p>
-  departments-detail works!
-</p>
+<div *ngIf="department == null">
+  <i style="font-size: 100px; color: #08c;" nz-icon nzType="smile" nzTheme="outline"></i>
+  <h1>Please select a department.</h1>
+</div>
+
+<div *ngIf=" department != null">
+  <nz-card nzTitle="Department Details">
+    <p style="font-size:30px; color:rgba(0, 0, 0, 0.85); margin-bottom:16px; font-weight: 500;">
+      {{department.name}}
+    </p>
+    <nz-card nzType="inner" nzTitle="Description">
+      <p>{{department.description}} </p>
+    </nz-card>
+    <nz-card nzType="inner" style="margin-top:16px;" nzTitle="Parent Department">
+      <p>{{department.parentName}}</p>
+      <a *ngIf="department.parent_id!= null" [routerLink]="['/dept-details', department.parent_id]"
+        routerLinkActive="router-link-active">View Department</a>
+    </nz-card>
+    <nz-card nzType="inner" style="margin-top:16px;" nzTitle="Parent Department">
+      <p>{{department.organizationName}}</p>
+      <a [routerLink]="['/org-details', department.organization_id]" routerLinkActive="router-link-active"> View
+        Organization</a>
+    </nz-card>
+    <br><br>
+    <nz-button-group style="margin-left: 15px;">
+      <button nz-button nzSize="large" nzType="default" type="button" class="btn btn-primary" (click)="onEdit()">
+        <i nz-icon nzType="edit" nzTheme="outline"></i>Edit</button>
+      <button nz-button nzSize="large" nzType="danger" type="button" class="btn btn-danger" (click)="onDelete()">
+        Delete<i nz-icon nzType="delete" nzTheme="outline"></i></button>
+    </nz-button-group>
+  </nz-card>
+
+</div>
