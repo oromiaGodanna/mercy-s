@@ -6,6 +6,7 @@ import { DepartmentsService } from '../departments.service';
 import { OrganizationsService } from 'src/app/organizations/organizations.service';
 import { Organization } from 'src/app/organizations/organizations.model';
 import { Subscription } from 'rxjs';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-departments-form',
@@ -25,7 +26,8 @@ export class DepartmentsFormComponent implements OnInit {
   constructor(private departmentService: DepartmentsService,
               private organizationService: OrganizationsService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private notification: NzNotificationService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -54,20 +56,28 @@ export class DepartmentsFormComponent implements OnInit {
     if(parent_id == "null") {
       parent_id = null;
     }
-
-    
     const newDepartment = new Department(
       this.departmentForm.value['deptName'],
       this.departmentForm.value['deptDesc'],
       parent_id,
       org_id
-    
     );
     console.log(newDepartment);
     if (this.editMode) {
       this.departmentService.updateDepartment(this.id, newDepartment);
+      this.notification.create(
+        'success',
+        'Department successfully Updated',
+        'Department Updated with the new Information provided'
+      );
     } else {
       this.departmentService.addDepartment(newDepartment);
+      this.notification.create(
+        'success',
+        'Department successfully Added',
+        'New Department Added.'
+      );
+     
     }
     this.router.navigate(['departments', org_id ]);
   }
@@ -92,15 +102,15 @@ export class DepartmentsFormComponent implements OnInit {
   private initForm() {
     let deptName = '';
     let deptDesc = '';
-    let parentDept ;
-    let deptOrg ;
+    let parentDept;
+    let deptOrg;
 
     if (this.editMode) {
       const department = this.departmentService.getDepartment(this.id);
       deptName = department.name;
       deptDesc = department.description;
       if(department.parent_id == null){
-        parentDept = "None";
+        parentDept = null;
       }else{
         parentDept = this.departmentService.getDepartment(department.parent_id).id;
       }
