@@ -2,3 +2,6 @@ button{
     margin: 10px;
     margin-left: 10px;
 }
+.selected {
+   color: #00A9DE; 
+}

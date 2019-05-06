@@ -34,6 +34,10 @@ export class AllDepartmentsComponent implements OnInit {
 
     console.log(this.departments);
   }
+  
+  onNewDepartment() {
+    this.router.navigate(['dept-form']);
+  }
 
   onView(index: number) {
     var dept = this.departmentService.getDepartmentByIndex(index);

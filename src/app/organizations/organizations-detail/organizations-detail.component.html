@@ -1,7 +1,19 @@
+<div nz-row>
+ <div nz-col nzSpan="20">
+    <nz-page-header nzBackIcon nzTitle="Organization Detail">
+      <nz-breadcrumb nz-page-header-breadcrumb>
+        <nz-breadcrumb-item><a [routerLink]="['/organizations']" routerLinkActive="router-link-active">Organizations</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item class="selected">Detail</nz-breadcrumb-item>
+        <nz-breadcrumb-item class="selected">{{organization.name}}</nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </nz-page-header>
+  </div>
+</div>
 
 <div nz-row>
-  <div nz-col nzSpan="16" nzOffset="4">
-    <nz-divider nzText="details" nzOrientation="right"></nz-divider>
+  <div nz-col nzSpan="24">
+    <nz-divider nzDashed nzText="details"></nz-divider>
   </div>
 </div>
 

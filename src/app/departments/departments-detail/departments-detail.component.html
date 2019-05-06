@@ -1,3 +1,27 @@
+
+<div nz-row>
+  <div nz-col nzSpan="20">
+    <nz-page-header nzBackIcon nzTitle="Department Detail">
+      <nz-breadcrumb nz-page-header-breadcrumb>
+          
+        <nz-breadcrumb-item><a [routerLink]="['/organization']" routerLinkActive="router-link-active">Organizations</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item><a [routerLink]="['/org-details', department.organization_id]" routerLinkActive="router-link-active" >{{department.organizationName}}</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item><a [routerLink]="['/departments', department.organization_id]" routerLinkActive="router-link-active" > Departments</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item class="selected">Details </nz-breadcrumb-item>
+        <nz-breadcrumb-item class="selected">{{department.name}}</nz-breadcrumb-item>
+       
+      
+      </nz-breadcrumb>
+    </nz-page-header>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-divider nzDashed nzText="details"></nz-divider>
+  </div>
+</div>
+
 <div *ngIf="department == null">
   <i style="font-size: 100px; color: #08c;" nz-icon nzType="smile" nzTheme="outline"></i>
   <h1>Please select a department.</h1>

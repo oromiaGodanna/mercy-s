@@ -1,12 +1,26 @@
 <div nz-row>
-  <div *ngIf="!editMode" nz-col nzSpan="16" nzOffset="4">
-    <h1>Adding a New Organization</h1>
-    <nz-divider nzText="Add" nzOrientation="right"></nz-divider>
+  <div nz-col nzSpan="20"  *ngIf="!editMode">
+  <nz-page-header nzBackIcon nzTitle="Adding New Organization">
+    <nz-breadcrumb nz-page-header-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/organizations']" routerLinkActive="router-link-active" >Organizations</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item class="selected">New</nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </nz-page-header>
   </div>
+  <div nz-col nzSpan="20" *ngIf="editMode">
+    <nz-page-header nzBackIcon nzTitle="Editing {{ organization.name }}">
+      <nz-breadcrumb nz-page-header-breadcrumb>
+        <nz-breadcrumb-item><a [routerLink]="['/organizations']" routerLinkActive="router-link-active" >Organizations</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item class="selected">Edit </nz-breadcrumb-item>
+        <nz-breadcrumb-item class="selected">{{ organization.name }}</nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </nz-page-header>
+  </div>
+</div>
 
-  <div *ngIf="editMode" nz-col nzSpan="14" nzOffset="4">
-    <h1>Editing {{ organization.name }}</h1>
-    <nz-divider nzText="Edit" nzOrientation="right"></nz-divider>
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-divider nzDashed nzText="Form"></nz-divider>
   </div>
 </div>
 

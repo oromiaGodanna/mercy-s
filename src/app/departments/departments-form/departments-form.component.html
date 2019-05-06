@@ -1,12 +1,33 @@
-<div nz-row>
-  <div *ngIf="!editMode" nz-col nzOffset="2">
-    <h1>Adding a New Department</h1>
-  </div>
-  <div *ngIf="editMode" nz-col nzOffset="2">
-    <h1>Editing {{ name }}</h1>
+<div nz-row *ngIf="!editMode">
+  <div nz-col nzSpan="20">
+    <nz-page-header nzBackIcon nzTitle="New Department">
+      <nz-breadcrumb nz-page-header-breadcrumb>
+        <nz-breadcrumb-item><a [routerLink]="['/departments']" routerLinkActive="router-link-active">Departments</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item class="selected">New</nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </nz-page-header>
   </div>
 </div>
-<hr><br>
+
+<div nz-row *ngIf="editMode">
+  <div nz-col nzSpan="20">
+    <nz-page-header nzBackIcon nzTitle="Edit Department" nzSubtitle="{{name}}">
+      <nz-breadcrumb nz-page-header-breadcrumb>
+        <nz-breadcrumb-item><a [routerLink]="['/departments']" routerLinkActive="router-link-active">Departments</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item class="selected">Edit</nz-breadcrumb-item>
+        <nz-breadcrumb-item class="selected">{{name}}</nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </nz-page-header>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-divider nzDashed nzText="Form"></nz-divider>
+  </div>
+</div>
+
 <div nz-row>
   <div nz-col nzOffset="2">
     <form nz-form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">

@@ -18,7 +18,7 @@ export class DepartmentsFormComponent implements OnInit {
   departmentForm: FormGroup;
   editMode = false;
   id: number;
-
+  name: string;
   organizations: Organization[];
   departments: Department[];
   subscription: Subscription;
@@ -106,6 +106,7 @@ export class DepartmentsFormComponent implements OnInit {
 
     if (this.editMode) {
       const department = this.departmentService.getDepartment(this.id);
+      this.name = department.name;
       deptName = department.name;
       deptDesc = department.description;
       if(department.parent_id == null){

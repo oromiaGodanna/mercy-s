@@ -1,15 +1,14 @@
 <div nz-row>
-  <div nz-col nzSpan="20" nzOffset="2">
-    <br>
-    <h1>Organizations</h1>
-    <button nz-button nzSize="large" nzType="primary" (click)="onAddOrganization()" type="submit">
+  <div nz-col nzSpan="20" *ngIf="!editMode">
+    <nz-page-header nzTitle="Organizations List"></nz-page-header>
+    <button nz-button nzSize="default" nzType="primary" (click)="onAddOrganization()" type="submit">
       <i nz-icon [type]="'plus'"></i>Add New Organization</button>
   </div>
 </div>
 
 <div nz-row>
-  <div nz-col nzSpan="16" nzOffset="4">
-    <nz-divider nzText="List" nzOrientation="right"></nz-divider>
+  <div nz-col nzSpan="24">
+    <nz-divider nzDashed nzText="List" ></nz-divider>
   </div>
 </div>
 
