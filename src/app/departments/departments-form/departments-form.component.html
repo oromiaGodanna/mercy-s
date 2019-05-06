@@ -57,7 +57,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="6" nzFor="organizationName">Organization</nz-form-label>
         <nz-form-control [nzSpan]="10">
-          <nz-select id="organization" formControlName="deptOrg" nzShowSearch nzAllowClear
+          <nz-select (ngModelChange)="organizationSelected($event)" id="organization" formControlName="deptOrg" nzShowSearch nzAllowClear
             nzPlaceHolder="Select an organization">
             <nz-option *ngFor="let org of organizations" [nzLabel]="org.name" [nzValue]="org.id"></nz-option>
           </nz-select>
@@ -72,7 +72,7 @@
         <nz-form-control [nzSpan]="10">
           <nz-select id="parent" formControlName="parentDept" nzShowSearch nzAllowClear
             nzPlaceHolder="Select a Department">
-            <nz-option *ngFor="let dept of departments" [nzLabel]="dept.name" [nzValue]="dept.id"></nz-option>
+            <nz-option *ngFor="let dept of departmnetOptions" [nzLabel]="dept.name" [nzValue]="dept.id"></nz-option>
             <nz-option nzLabel="None" [nzValue] = 0></nz-option>
           </nz-select>
           <nz-form-explain *ngIf="!departmentForm.get('parentDept').valid && departmentForm.get('parentDept').touched">

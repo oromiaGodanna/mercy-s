@@ -22,8 +22,9 @@ export class DepartmentsFormComponent implements OnInit {
   organizations: Organization[];
   departments: Department[];
   subscription: Subscription;
-
-
+  departmnetOptions: Department[];
+  selectedValue: number;
+ 
   constructor(private departmentService: DepartmentsService,
               private organizationService: OrganizationsService,
               private route: ActivatedRoute,
@@ -49,6 +50,11 @@ export class DepartmentsFormComponent implements OnInit {
       (organizations: Organization[]) => {
         this.organizations = organizations;
       });
+      if(this.editMode){
+        this.setDepartmnetOptions();
+        //this.filterDepartmets(this.id);
+      }
+  
   }
 
   onSubmit() {
@@ -98,6 +104,11 @@ export class DepartmentsFormComponent implements OnInit {
    return names;
   }
 
+  organizationSelected(selectedValue) {
+    this.selectedValue = selectedValue;
+    this.setDepartmnetOptions();
+  }
+
   private initForm() {
     let deptName = '';
     let deptDesc = '';
@@ -115,14 +126,48 @@ export class DepartmentsFormComponent implements OnInit {
         parentDept = this.departmentService.getDepartment(department.parent_id).id;
       }
         deptOrg = this.organizationService.getOrganization(department.organization_id).id;
+        this.selectedValue = deptOrg;
     }
+
     this.departmentForm = new FormGroup(
       {
         'deptName': new FormControl(deptName, Validators.required),
         "deptDesc": new FormControl(deptDesc, Validators.required),
         "parentDept": new FormControl(parentDept, Validators.required),
-        "deptOrg": new FormControl(deptOrg, Validators.required),
+        "deptOrg": new FormControl( {value: deptOrg, disabled: this.editMode}, Validators.required),
       });
   }
 
+
+private setDepartmnetOptions(){
+    var options: Department[] = [];
+    this.departments.forEach(dept => {
+      if (dept.organization_id == this.selectedValue){
+        options.push(dept);
+      }
+    });
+    this.departmnetOptions = options;
+    // this.deleteChildren(this.id);
+    console.log(this.departmnetOptions);
+  }
+ 
+  deleteChildren(id: number){
+    var childrens: number[] = [];
+    this.departmnetOptions.forEach(dept => {
+      if(dept.parent_id == this.id){
+       childrens.push(this.departments.indexOf(dept));
+      }
+    });
+    if(childrens.length > 0){
+      this.delete(childrens);
+    }
+  }
+
+  private delete(childs: number[]) {
+    childs.forEach(id => {
+      var index = this.departments.indexOf(this.departmentService.getDepartment(id));
+      this.departments.splice(index, 1);
+      this.deleteChildren(id);
+    });
+  }
 }
