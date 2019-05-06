@@ -1,1 +1,16 @@
-<router-outlet></router-outlet>
+<nz-layout class="layout">
+    <nz-header>
+        <div class="logo"></div>
+        <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+            <li nz-menu-item [routerLink]="['/organizations']" routerLinkActive="router-link-active"><i nz-icon nzType="home" nzTheme="outline"></i> Organizations</li>
+            <li nz-menu-item [routerLink]="['/departments']" routerLinkActive="router-link-active" >Departments</li>
+            <li nz-menu-item>Documentation </li>
+        </ul>
+    </nz-header>
+    <nz-content style="padding:0 50px;">
+        <div style="background:#fff; padding: 24px; min-height: 280px;">
+            <router-outlet></router-outlet>
+        </div>
+    </nz-content>
+    <nz-footer style="text-align: center;">Organizations Structure ©2019 Implement By Angular</nz-footer>
+</nz-layout>

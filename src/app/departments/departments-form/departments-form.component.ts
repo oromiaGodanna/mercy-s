@@ -18,6 +18,7 @@ export class DepartmentsFormComponent implements OnInit {
   departmentForm: FormGroup;
   editMode = false;
   id: number;
+
   organizations: Organization[];
   departments: Department[];
   subscription: Subscription;
@@ -53,7 +54,7 @@ export class DepartmentsFormComponent implements OnInit {
   onSubmit() {
     var org_id = this.departmentForm.value['deptOrg'];
     var parent_id = this.departmentForm.value['parentDept'];
-    if(parent_id == "null") {
+    if(parent_id == "0") {
       parent_id = null;
     }
     const newDepartment = new Department(
@@ -62,8 +63,8 @@ export class DepartmentsFormComponent implements OnInit {
       parent_id,
       org_id
     );
-    console.log(newDepartment);
     if (this.editMode) {
+      newDepartment.id = this.id;
       this.departmentService.updateDepartment(this.id, newDepartment);
       this.notification.create(
         'success',
@@ -97,26 +98,23 @@ export class DepartmentsFormComponent implements OnInit {
    return names;
   }
 
- 
-
   private initForm() {
     let deptName = '';
     let deptDesc = '';
-    let parentDept;
-    let deptOrg;
+    let parentDept: number;
+    let deptOrg: number;
 
     if (this.editMode) {
       const department = this.departmentService.getDepartment(this.id);
       deptName = department.name;
       deptDesc = department.description;
       if(department.parent_id == null){
-        parentDept = null;
+        parentDept = 0;
       }else{
         parentDept = this.departmentService.getDepartment(department.parent_id).id;
       }
         deptOrg = this.organizationService.getOrganization(department.organization_id).id;
     }
-
     this.departmentForm = new FormGroup(
       {
         'deptName': new FormControl(deptName, Validators.required),

@@ -47,6 +47,7 @@ export class DepartmentsService {
   }
 
   updateDepartment(id:number, newDepartment){
+    console.log("update deparetment");
     var index = this.departments.indexOf(this.getDepartment(id));
     this.departments[index] = newDepartment;
     this.departmentListChanged.next(this.departments.slice());

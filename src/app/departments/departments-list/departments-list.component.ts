@@ -31,6 +31,15 @@ export class DepartmentsListComponent implements OnInit {
               private notification: NzNotificationService) { }
 
   ngOnInit() {
+
+    this.subscription = this.departmentService.departmentListChanged.subscribe(
+      (departments: Department[]) => {
+        this.departments = departments;
+        this.organizationDepartments = this.getOrganizatonDepartments(this.organization_id);
+        console.log(this.organizationDepartments);
+        this.setNodes();
+      });
+
     this.route.params.subscribe(
         (params: Params) => {
         this.organization_id = params['org_id'];
@@ -40,12 +49,6 @@ export class DepartmentsListComponent implements OnInit {
         this.setNodes();
       });
 
-    this.subscription = this.departmentService.departmentListChanged.subscribe(
-      (departments: Department[]) => {
-        this.departments = departments;
-        this.organizationDepartments = this.getOrganizatonDepartments(this.organization_id);
-        this.setNodes();
-      });
       
 }
 
@@ -100,6 +103,7 @@ export class DepartmentsListComponent implements OnInit {
         departments.push(dept);
       }
     });
+    console.log(departments);
     return departments;
 }
 
