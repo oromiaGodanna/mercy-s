@@ -29,10 +29,9 @@ export class AllDepartmentsComponent implements OnInit {
     this.subscription = this.departmentService.departmentListChanged.subscribe(
     (departments: Department[]) => {
       this.departments = departments;
+      console.log(this.departments);
       this.initializeData();
     });
-
-    console.log(this.departments);
   }
   
   onNewDepartment() {

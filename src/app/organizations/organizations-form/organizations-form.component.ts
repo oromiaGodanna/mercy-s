@@ -32,12 +32,17 @@ export class OrganizationsFormComponent implements OnInit {
       });
   }
 
+  onBack() {
+    this.router.navigate(['organizations']);
+  }
+
   onSubmit() {
     const newOrganization = new Organization(
       this.organizationForm.value['orgName'],
       this.organizationForm.value['orgDesc'],
     );
     if (this.editMode) {
+      newOrganization.id = this.id;
       this.organizationService.updateOrganization(this.id, newOrganization);
       this.notification.create(
         'success',
@@ -60,7 +65,6 @@ export class OrganizationsFormComponent implements OnInit {
     this.organizationForm.reset();
   }
   onCancel() {
-    
     this.router.navigate(["organizations"]);
   }
 

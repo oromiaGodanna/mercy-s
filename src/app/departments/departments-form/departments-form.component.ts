@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, ChildrenOutletContexts } from '@angular/router';
 import { Department } from '../departmnets.model';
 import { DepartmentsService } from '../departments.service';
 import { OrganizationsService } from 'src/app/organizations/organizations.service';
@@ -24,12 +24,12 @@ export class DepartmentsFormComponent implements OnInit {
   subscription: Subscription;
   departmnetOptions: Department[];
   selectedValue: number;
- 
+
   constructor(private departmentService: DepartmentsService,
-              private organizationService: OrganizationsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private notification: NzNotificationService) { }
+    private organizationService: OrganizationsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private notification: NzNotificationService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -39,36 +39,39 @@ export class DepartmentsFormComponent implements OnInit {
         this.initForm();
       });
 
-      this.organizations = this.organizationService.getOrganizations();
-      this.departments = this.departmentService.getDepartments();
-      this.subscription = this.departmentService.departmentListChanged.subscribe(
-        (departments: Department[]) => {
-          this.departments = departments;
-        });
+    this.organizations = this.organizationService.getOrganizations();
+    this.departments = this.departmentService.getDepartments();
+    this.subscription = this.departmentService.departmentListChanged.subscribe(
+      (departments: Department[]) => {
+        this.departments = departments;
+      });
 
-      this.subscription = this.organizationService.organizationListChanged.subscribe(
+    this.subscription = this.organizationService.organizationListChanged.subscribe(
       (organizations: Organization[]) => {
         this.organizations = organizations;
       });
-      if(this.editMode){
-        this.setDepartmnetOptions();
-        //this.filterDepartmets(this.id);
-      }
-  
+    if (this.editMode) {
+      this.setDepartmnetOptions();
+      this.filterDepartmentOptions();
+    }
+  }
+
+  onBack(){
+    this.router.navigate(['departments']);
   }
 
   onSubmit() {
-    var org_id = this.departmentForm.value['deptOrg'];
     var parent_id = this.departmentForm.value['parentDept'];
-    if(parent_id == "0") {
+    if (parent_id == "0") {
       parent_id = null;
     }
     const newDepartment = new Department(
       this.departmentForm.value['deptName'],
       this.departmentForm.value['deptDesc'],
       parent_id,
-      org_id
+      this.selectedValue
     );
+
     if (this.editMode) {
       newDepartment.id = this.id;
       this.departmentService.updateDepartment(this.id, newDepartment);
@@ -84,24 +87,23 @@ export class DepartmentsFormComponent implements OnInit {
         'Department successfully Added',
         'New Department Added.'
       );
-     
     }
-    this.router.navigate(['departments', org_id ]);
+    this.router.navigate(['departments', this.selectedValue]);
   }
 
   onClear() {
     this.departmentForm.reset();
   }
   onCancel() {
-    this.router.navigate(['departments', this.id]);
+    this.router.navigate(['departments']);
   }
- 
-  getDepartmentsName(){
+
+  getDepartmentsName() {
     var names = [];
     this.departments.forEach(dept => {
       names.push(dept.name);
     });
-   return names;
+    return names;
   }
 
   organizationSelected(selectedValue) {
@@ -120,13 +122,13 @@ export class DepartmentsFormComponent implements OnInit {
       this.name = department.name;
       deptName = department.name;
       deptDesc = department.description;
-      if(department.parent_id == null){
+      if (department.parent_id == null) {
         parentDept = 0;
-      }else{
+      } else {
         parentDept = this.departmentService.getDepartment(department.parent_id).id;
       }
-        deptOrg = this.organizationService.getOrganization(department.organization_id).id;
-        this.selectedValue = deptOrg;
+      deptOrg = this.organizationService.getOrganization(department.organization_id).id;
+      this.selectedValue = deptOrg;
     }
 
     this.departmentForm = new FormGroup(
@@ -134,40 +136,45 @@ export class DepartmentsFormComponent implements OnInit {
         'deptName': new FormControl(deptName, Validators.required),
         "deptDesc": new FormControl(deptDesc, Validators.required),
         "parentDept": new FormControl(parentDept, Validators.required),
-        "deptOrg": new FormControl( {value: deptOrg, disabled: this.editMode}, Validators.required),
+        "deptOrg": new FormControl({ value: deptOrg, disabled: this.editMode }, Validators.required),
       });
   }
 
 
-private setDepartmnetOptions(){
-    var options: Department[] = [];
+  private setDepartmnetOptions() {
+    var options = [];
     this.departments.forEach(dept => {
-      if (dept.organization_id == this.selectedValue){
+      //filter out departments in the same organization
+      if (dept.organization_id == this.selectedValue) {
         options.push(dept);
       }
     });
     this.departmnetOptions = options;
-    // this.deleteChildren(this.id);
-    console.log(this.departmnetOptions);
   }
- 
-  deleteChildren(id: number){
-    var childrens: number[] = [];
+
+  filterDepartmentOptions(){
+    var index = this.departmnetOptions.indexOf(this.departmentService.getDepartment(this.id));
+    this.departmnetOptions.splice(index, 1)
+    this.deleteChildren(this.id);
+  }
+
+  private deleteChildren(id: number){
+    var children: number[] = [];
     this.departmnetOptions.forEach(dept => {
-      if(dept.parent_id == this.id){
-       childrens.push(this.departments.indexOf(dept));
+      if(dept.parent_id == id){
+        children.push(dept.id);
       }
     });
-    if(childrens.length > 0){
-      this.delete(childrens);
+    if(children.length > 0){
+      this.delete(children);
     }
   }
 
-  private delete(childs: number[]) {
+  delete(childs: number[]){
     childs.forEach(id => {
-      var index = this.departments.indexOf(this.departmentService.getDepartment(id));
-      this.departments.splice(index, 1);
+      var index = this.departmnetOptions.indexOf(this.departmentService.getDepartment(id));
+      this.departmnetOptions.splice(index, 1);
       this.deleteChildren(id);
-    });
+    })
   }
 }

@@ -30,6 +30,10 @@ export class DepartmentsDetailComponent implements OnInit {
       });
   }
 
+  onBack(){
+    this.router.navigate(['departments', this.department.organization_id]);
+  }
+
   onEdit() {
    this.router.navigate(['dept-form', this.id]);
   }
@@ -63,5 +67,5 @@ export class DepartmentsDetailComponent implements OnInit {
         this.department.parentName = "None";
       }
   }
-
+  
 }

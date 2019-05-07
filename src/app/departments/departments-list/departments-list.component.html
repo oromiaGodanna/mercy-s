@@ -1,32 +1,38 @@
 <div nz-row>
   <div nz-col nzSpan="20">
-    <nz-page-header nzBackIcon nzTitle="Department List" nzSubtitle="{{organization.name}}">
+    <nz-page-header nzBackIcon (nzBack)="onBack()" nzTitle="Department List" nzSubtitle="{{organization.name}}">
       <nz-breadcrumb nz-page-header-breadcrumb>
-        <nz-breadcrumb-item><a [routerLink]="['/organization']" routerLinkActive="router-link-active">Organizations</a></nz-breadcrumb-item>
-        <nz-breadcrumb-item><a [routerLink]="['/org-details',  organization_id]" routerLinkActive="router-link-active">{{organization.name}}</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item><a [routerLink]="['/organization']" routerLinkActive="router-link-active">Organizations</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item><a [routerLink]="['/org-details',  organization_id]"
+            routerLinkActive="router-link-active">{{organization.name}}</a></nz-breadcrumb-item>
         <nz-breadcrumb-item class="selected"> Departments</nz-breadcrumb-item>
       </nz-breadcrumb>
     </nz-page-header>
-    <button type="button" nz-button nzSize="defualt" nzType="primary" style="margin-left: 20px; float: left;" (click)="onAddDepartment()"
-      type="submit">
+    <button type="button" nz-button nzSize="defualt" nzType="primary" style="margin-left: 20px; float: left;"
+      (click)="onAddDepartment()" type="submit">
       <i nz-icon [type]="'plus'"></i>Add New Department</button>
-      <div style="float: right;">
-        <h3>View Mode</h3>
-        <nz-switch nzSize="default" [(ngModel)]="switchMode" nzCheckedChildren="Table" nzUnCheckedChildren="Tree">
-        </nz-switch>
-      </div>
+    <div style="float: right;">
+      <h3>View Mode</h3>
+      <nz-switch nzSize="default" [(ngModel)]="switchMode" nzCheckedChildren="Table" nzUnCheckedChildren="Tree">
+      </nz-switch>
+    </div>
   </div>
 </div>
 
-<div nz-row  *ngIf="switchMode">
+<div nz-row *ngIf="switchMode">
   <div nz-col nzSpan="24">
-    <nz-divider nzDashed nzText="Table"></nz-divider>
+    <nz-divider nzDashed [nzText]="text" class="selected">
+      <ng-template #text><i nz-icon type="table"></i> Table</ng-template>
+    </nz-divider>
   </div>
 </div>
 
-<div nz-row  *ngIf="!switchMode">
+<div nz-row *ngIf="!switchMode">
   <div nz-col nzSpan="24">
-    <nz-divider nzDashed nzText="Tree"></nz-divider>
+    <nz-divider nzDashed [nzText]="text" class="selected">
+      <ng-template #text><i nz-icon type="cluster"></i>Tree</ng-template>
+    </nz-divider>
   </div>
 </div>
 
@@ -68,14 +74,16 @@
 </div>
 
 <div *ngIf="!switchMode">
-  <div nz-col nzOffset="2">
-    <h1>Tree Structure</h1>
-  </div>
-
   <div nz-row *ngIf="empty">
     <div nz-col nzOffset="4">
-      <h1>No content to be displayed!!!!</h1>
-      <h2><a (click)="onAddDepartment()">Add Departments</a></h2>
+      <nz-empty [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
+        <ng-template #contentTpl>
+          <span> No content to be displayed!!!!</span>
+        </ng-template>
+        <ng-template #footerTpl>
+          <button nz-button nzType="primary" (click)="onAddDepartment()">Add Departments</button>
+        </ng-template>
+      </nz-empty>
     </div>
   </div>
 

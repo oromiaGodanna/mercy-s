@@ -1,3 +1,6 @@
 .selected {
    color: #00A9DE; 
 }
+nz-form-label {
+    font-weight: bold;
+}

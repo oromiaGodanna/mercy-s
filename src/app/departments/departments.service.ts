@@ -13,13 +13,13 @@ export class DepartmentsService {
   constructor() { }
 
   private departments: Department[] = [
-    new Department("CEO", "First Level",        null, 1, 101),
-    new Department("CFO", "Second Level",       101, 1, 102),
-    new Department("CMO", "Second Level",       101, 1, 103),
-    new Department("CTO", "Second  Level",      101, 1, 104),
-    new Department("Management", "Third Level", 102, 1, 105),
-    new Department("Financial", "Third Level",  103, 1, 106),
-    new Department("Auditors", "Third  Level",  104, 1, 107),
+    new Department("CEO", "Chief Executive Officer ",        null, 1, 101),
+    new Department("CFO", "Chief Financial Officer",       101, 1, 102),
+    new Department("CMO", "Chief Marketing Office",       101, 1, 103),
+    new Department("CTO", "Chief Technology Officer",      101, 1, 104),
+    new Department("Management", "Administration of an Organization", 102, 1, 105),
+    new Department("Financial", "Manages money of an Organization",  103, 1, 106),
+    new Department("Auditors", "Evaluate Operational Procedures",  104, 1, 107),
 
     new Department("A", "First Level", null,  2, 201),
     new Department("B", "Second Level", 201,  2, 202),
@@ -47,7 +47,6 @@ export class DepartmentsService {
   }
 
   updateDepartment(id:number, newDepartment){
-    console.log("update deparetment");
     var index = this.departments.indexOf(this.getDepartment(id));
     this.departments[index] = newDepartment;
     this.departmentListChanged.next(this.departments.slice());

@@ -1,6 +1,6 @@
 <div nz-row>
   <div nz-col nzSpan="20"  *ngIf="!editMode">
-  <nz-page-header nzBackIcon nzTitle="Adding New Organization">
+  <nz-page-header nzBackIcon (nzBack)="onBack()"  nzTitle="Adding New Organization">
     <nz-breadcrumb nz-page-header-breadcrumb>
       <nz-breadcrumb-item><a [routerLink]="['/organizations']" routerLinkActive="router-link-active" >Organizations</a></nz-breadcrumb-item>
       <nz-breadcrumb-item class="selected">New</nz-breadcrumb-item>
@@ -8,7 +8,7 @@
   </nz-page-header>
   </div>
   <div nz-col nzSpan="20" *ngIf="editMode">
-    <nz-page-header nzBackIcon nzTitle="Editing {{ organization.name }}">
+    <nz-page-header nzBackIcon (nzBack)="onBack()" nzTitle="Editing {{ organization.name }}">
       <nz-breadcrumb nz-page-header-breadcrumb>
         <nz-breadcrumb-item><a [routerLink]="['/organizations']" routerLinkActive="router-link-active" >Organizations</a></nz-breadcrumb-item>
         <nz-breadcrumb-item class="selected">Edit </nz-breadcrumb-item>
@@ -18,19 +18,26 @@
   </div>
 </div>
 
-<div nz-row>
-  <div nz-col nzSpan="24">
-    <nz-divider nzDashed nzText="Form"></nz-divider>
+<div nz-row> 
+  <div nz-col nzSpan="24" *ngIf="!editMode">
+    <nz-divider nzDashed [nzText]="text" class="selected">
+      <ng-template #text><i nz-icon type="form"></i> Form</ng-template>
+    </nz-divider>
+  </div>
+  <div nz-col nzSpan="24" *ngIf="editMode">
+  <nz-divider nzDashed [nzText]="text" class="selected">
+    <ng-template #text><i nz-icon type="edit"></i> Edit</ng-template>
+  </nz-divider>
   </div>
 </div>
 
 <div nz-row>
-  <div nz-col nzSpan="20" nzOffset="2">
+  <div nz-col nzSpan="14" nzOffset="4">
     <form nz-form [formGroup]="organizationForm" (ngSubmit)="onSubmit()">
     
       <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="organizationName">Organization Name</nz-form-label>
-        <nz-form-control [nzSpan]="14">
+        <nz-form-label  nzFor="organizationName" >Organization Name</nz-form-label>
+        <nz-form-control  >
           <input nz-input name="orgName" id="organizationName" placeholder="Name" type="text" formControlName="orgName">
           <nz-form-explain *ngIf="!organizationForm.get('orgName').valid && organizationForm.get('orgName').touched">
             This field is required!
@@ -39,8 +46,8 @@
       </nz-form-item>
     
       <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="organizationDesc">Organization Description</nz-form-label>
-        <nz-form-control [nzSpan]="14">
+        <nz-form-label nzFor="organizationDesc">Organization Description</nz-form-label>
+        <nz-form-control>
           <textarea nz-input formControlName="orgDesc" placeholder="Summary Describing the Organization" type="text"
             id="desc" rows="5">
                   </textarea>

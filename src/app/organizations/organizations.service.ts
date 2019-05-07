@@ -11,11 +11,11 @@ export class OrganizationsService {
   organizationListChanged = new Subject<Organization[]>();
 
   private orgnizations: Organization[] = [
-    new Organization("Organization1", "Organization 1", 1),
-    new Organization("Organization2", "Organization 2", 2),
-    new Organization("Organization3", "Organization 3", 3),
-    new Organization("Organization4", "Organization 4", 4),
-    new Organization("Organization5", "Organization 5", 5),
+    new Organization("CBE", "Commercial Bank of Ethiopia", 1),
+    new Organization("ETC", "Ethio Telecom", 2),
+    new Organization("EELPA", " Ethiopian Electric Light & Power Authority ", 3),
+    new Organization("METEC", "Metals and Engineering Corporation", 4),
+    new Organization("ERC", "Ethiopia Railway Corporation", 5),
   ];
 
   constructor(private departmentService: DepartmentsService) { }

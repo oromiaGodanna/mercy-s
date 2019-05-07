@@ -1,6 +1,6 @@
 <div nz-row>
  <div nz-col nzSpan="20">
-    <nz-page-header nzBackIcon nzTitle="Organization Detail">
+    <nz-page-header nzBackIcon (nzBack)="onBack()" nzTitle="Organization Detail">
       <nz-breadcrumb nz-page-header-breadcrumb>
         <nz-breadcrumb-item><a [routerLink]="['/organizations']" routerLinkActive="router-link-active">Organizations</a>
         </nz-breadcrumb-item>
@@ -13,13 +13,16 @@
 
 <div nz-row>
   <div nz-col nzSpan="24">
-    <nz-divider nzDashed nzText="details"></nz-divider>
+    <nz-divider nzDashed [nzText]="text" class="selected">
+      <ng-template #text><i nz-icon type="profile"></i> Details</ng-template>
+    </nz-divider>
   </div>
 </div>
 
 <div nz-row>
   <div nz-col nzSpan="16" nzOffset="4">
       <p style="font-size:30px; color:rgba(0, 0, 0, 0.85); margin-bottom:16px; font-weight: 500;">
+        <nz-avatar nzSize="large" nzIcon="bank" style="background-color:#00A9DE;"></nz-avatar>
         {{organization.name}}
       </p>
       <nz-card nzType="inner" nzTitle="Description">
@@ -27,8 +30,8 @@
       </nz-card>
      
       <nz-card nzType="inner" style="margin-top:16px;" nzTitle="Departments">
-        <h3><a (click)="onViewDepartments()" nz-tooltip nzTitle="View Departments under {{organization.name}}">
-          View Department List</a></h3>
+        <a (click)="onViewDepartments()" nz-tooltip nzTitle="View Departments under {{organization.name}}">
+          View Department List</a>
       </nz-card>
       <br><br>
       <nz-button-group>

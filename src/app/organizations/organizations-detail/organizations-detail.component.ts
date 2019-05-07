@@ -28,6 +28,9 @@ export class OrganizationsDetailComponent implements OnInit {
       });
   }
 
+  onBack(){
+    this.router.navigate(['organizations']);
+  }
   onEdit() {
     this.router.navigate(['org-form', this.id]);
   }

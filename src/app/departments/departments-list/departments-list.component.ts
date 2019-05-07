@@ -36,7 +36,6 @@ export class DepartmentsListComponent implements OnInit {
       (departments: Department[]) => {
         this.departments = departments;
         this.organizationDepartments = this.getOrganizatonDepartments(this.organization_id);
-        console.log(this.organizationDepartments);
         this.setNodes();
       });
 
@@ -48,8 +47,9 @@ export class DepartmentsListComponent implements OnInit {
         this.organizationDepartments = this.getOrganizatonDepartments(this.organization_id);   
         this.setNodes();
       });
-
-      
+}
+onBack(){
+  this.router.navigate(['org-details', this.organization_id])
 }
 
  onAddDepartment() {
@@ -86,8 +86,9 @@ export class DepartmentsListComponent implements OnInit {
     });
   }
   
-  nzClick($event: NzFormatEmitEvent) {
-   console.log(event);
+  nzClick(event: NzFormatEmitEvent) {
+    var selectedId = event.selectedKeys["0"].origin.id;
+    this.router.navigate(['dept-details', selectedId]);
   }
 
  private getOrganizatonDepartments(org_id: number){
@@ -103,7 +104,6 @@ export class DepartmentsListComponent implements OnInit {
         departments.push(dept);
       }
     });
-    console.log(departments);
     return departments;
 }
 
@@ -127,7 +127,7 @@ private setNodes(){
         children.push(
           {
             title: dept.name,
-           
+            id: dept.id,
             expanded: true,
             children: this.getChildren(dept.id),
             isLeaf: (this.getChildren(dept.id).length < 1) ? true : false
@@ -145,7 +145,7 @@ private setNodes(){
     this.nodes.push(
       {
         title: department.name,
-       
+        id: department.id,
         expanded: true,
         children: childrens,
         isLeaf: (childrens.length < 1) ? true : false

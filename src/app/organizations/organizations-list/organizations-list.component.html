@@ -8,7 +8,9 @@
 
 <div nz-row>
   <div nz-col nzSpan="24">
-    <nz-divider nzDashed nzText="List" ></nz-divider>
+    <nz-divider nzDashed [nzText]="text" class="selected">
+      <ng-template #text><i nz-icon type="table"></i> List</ng-template>
+    </nz-divider>
   </div>
 </div>
 
